@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:mvc="http://www.springframework.org/schema/mvc"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+   http://www.springframework.org/schema/mvc
+   http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--处理静态资源[js,css,jpg,包括html等]-->
+    <!-- 注册默认的DefaultServletHttpRequestHandler,处理对于webapp目录下不属于WEB-INF的静态资源文件-->
+    <mvc:default-servlet-handler/>
+
+    <!--注册ResourceHttpRequestHandler,处理WEB-INF的静态资源文件,包括html。如果此Xml配置方法失效,可以用java config [com.hisoka.config.MyAppWebConfig]的方式替换-->
+    <mvc:resources mapping="/res/**" location="/WEB-INF/res/" />
+
+    <!-- 覆盖默认springmvc的请求与返回数据格式转换方法 -->
+    <bean id="requestMappingHandlerAdapter" class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="jacksonHttpMessageConverter" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- json数据转化器 -->
+    <bean id="jacksonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>application/json;charset=UTF-8</value>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--<mvc:interceptors>
+        <bean name="encodingFilter" class="org.springframework.web.filter.CharacterEncodingFilter" >
+            <constructor-arg name="encoding" value="UTF-8" />
+            <constructor-arg name="forceEncoding" value="false" />
+        </bean>
+        <bean name="sessionFilter" class="org.springframework.web.filter.CharacterEncodingFilter" >
+            <constructor-arg name="encoding" value="UTF-8" />
+            <constructor-arg name="forceEncoding" value="false" />
+        </bean>
+    </mvc:interceptors>-->
+</beans>

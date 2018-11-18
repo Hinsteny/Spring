@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+ 
+	<display-name>simple-springmvc</display-name>
+
+	<context-param>
+		<param-name>webAppRootKey</param-name>
+		<param-value>welcome</param-value>
+	</context-param>
+	
+	<!-- spring Listener 需要加载的配置文件 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:META-INF/spring/spring-context.xml</param-value>
+	</context-param>
+
+	<!-- listeners -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- /listeners -->
+	
+	<!-- filters -->
+	<!-- 编码设置 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<!-- /编码设置 -->
+
+	<!-- Servlet -->
+	<!-- 加载web目录下面的配置文件 -->
+	<servlet>
+		<servlet-name>spring</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+            <param-value>classpath:META-INF/spring/spring-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>spring</servlet-name>
+		<url-pattern>/</url-pattern><!-- url配置为/,不带文件后缀，静态文件的访问用mvc:resources标签处理 -->
+	</servlet-mapping>
+	<!-- /Servlet -->
+
+	<!-- 欢迎页 -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	<!-- 错误异常呈现页面[404] -->
+	<error-page>
+		<location>/error.html</location>
+	</error-page>
+
+</web-app>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.spring.hisoka</groupId>
+  <artifactId>spring</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <name>spring</name>
+
+  <modules>
+    <module>simple-springmvc</module>
+    <module>spring-schedule</module>
+  </modules>
+
+  <!-- properties -->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.targetJdk>1.8</project.build.targetJdk>
+    <jm.build.jvmsize>1024m</jm.build.jvmsize>
+    <jm.maven.version>3.0.5</jm.maven.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <!-- dependency plugin version -->
+    <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
+    <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+    <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+    <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+    <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+    <onejar-maven-plugin.version>1.4.4</onejar-maven-plugin.version>
+    <maven-war-plugin.version>3.0.0</maven-war-plugin.version>
+    <maven-site-plugin.version>3.5.1</maven-site-plugin.version>
+    <maven-pmd-plugin.version>3.7</maven-pmd-plugin.version>
+    <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+    <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+    <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+    <findbugs-maven-plugin.version>3.0.4</findbugs-maven-plugin.version>
+    <jetty-plugin.version>9.4.12.RC2</jetty-plugin.version>
+
+    <testng.version>6.13.1</testng.version>
+
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${maven-compiler-plugin.version}</version>
+          <configuration>
+            <source>${maven.compiler.source}</source>
+            <target>${maven.compiler.target}</target>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <maxmem>${jm.build.jvmsize}</maxmem>
+            <showWarnings>true</showWarnings>
+            <compilerArguments>
+              <Werror/>
+            </compilerArguments>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jar-plugin</artifactId>
+          <version>${maven-jar-plugin.version}</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib</classpathPrefix>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>${maven-source-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>attach-sources</id>
+              <phase>package</phase>
+              <goals>
+                <goal>jar-no-fork</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>${maven-javadoc-plugin.version}</version>
+          <configuration>
+            <source>${project.build.targetJdk}</source>
+            <charset>${project.build.sourceEncoding}</charset>
+            <encoding>${project.build.sourceEncoding}</encoding>
+            <docencoding>${project.build.sourceEncoding}</docencoding>
+          </configuration>
+          <executions>
+            <execution>
+              <id>do-javadoc</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>jar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>${maven-deploy-plugin.version}</version>
+          <executions>
+            <execution>
+              <id>deploy</id>
+              <phase>deploy</phase>
+              <goals>
+                <goal>deploy</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${maven-war-plugin.version}</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+          <configuration>
+            <descriptors>
+              <descriptor>src/assembly/bin.xml</descriptor>
+            </descriptors>
+          </configuration>
+        </plugin>
+
+        <plugin>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>${jetty-plugin.version}</version>
+        </plugin>
+
+      </plugins>
+    </pluginManagement>
+  </build>
+
+</project>
